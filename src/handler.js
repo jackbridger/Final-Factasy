@@ -16,4 +16,25 @@ const handleHome = (request, response) => {
   });
 };
 
-module.exports = { handleHome };
+const handlePublic = (request, response) => {
+  const extension = path.extname(request.url).substring(1);
+  const extensionType = {
+    html: "text/html",
+    css: "text/css",
+    js: "application/javascript",
+    ico: "image/x-icon"
+  }
+  console.log(request.url);
+  const filePath = path.join(__dirname, "..", request.url)
+  fs.readFile(filePath, (error, file) => {
+    if (error) {
+      response.writeHead(500, { "content-type": "text/html" });
+      response.end("Something went wrong with our dragons");
+    } else {
+      response.writeHead(200, { "content-type": extensionType[extension] });
+      response.end(file);
+    };
+  });
+};
+
+module.exports = { handleHome, handlePublic };
