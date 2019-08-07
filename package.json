@@ -4,7 +4,7 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "test": "tape tests/*.test.js | tap-spec",
+    "test": "NODE_ENV=test tape tests/*.test.js | tap-spec",
     "start": "node src/server.js"
   },
   "author": "",
