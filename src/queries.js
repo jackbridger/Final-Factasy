@@ -1,4 +1,18 @@
 const databaseConnection = require('./database/db_connection');
+
+const createUser = (name) => {
+    databaseConnection.query(`INSERT INTO users(name) VALUES ('${name}');`, (err, res) => {
+        if (err) {
+            throw new Error('Enter a name')
+        }
+
+    })
+}
+
+
+
+
+
 const getUsers = (cb) => {
     databaseConnection.query('SELECT * FROM users ORDER BY id', (err, res) => {
         if (err) {
@@ -68,11 +82,11 @@ const getScoreByUser = (userId, cb) => {
     INNER JOIN inventory 
     ON ownership.item_id = inventory.id 
     WHERE ownership.owner_id = ${userId}`, (err, res) => {
-        if (err) cb(err)
-        else {
-            cb(null, res.rows);
-        }
-    });
+            if (err) cb(err)
+            else {
+                cb(null, res.rows);
+            }
+        });
 }
 
 const getAllScores = cb => {
@@ -83,14 +97,14 @@ const getAllScores = cb => {
     INNER JOIN inventory 
     ON inventory.id = ownership.item_id 
     GROUP BY users.id`, (err, res) => {
-        if (err) cb(err)
-        else {
-            cb(null, res.rows);
-        }
-    })
+            if (err) cb(err)
+            else {
+                cb(null, res.rows);
+            }
+        })
 }
 
-module.exports = { getUsers, getItemsOwnedBy, getInventory, getOwnership, buyItem, getScoreByUser, getAllScores };
+module.exports = { getUsers, getItemsOwnedBy, getInventory, getOwnership, buyItem, getScoreByUser, getAllScores, createUser };
 
 
 

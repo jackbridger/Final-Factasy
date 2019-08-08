@@ -42,8 +42,10 @@ const handlePublic = (request, response) => {
 
 const handleDbNewUser = (request, response) => {
   dataStreamer(request, (data) => {
-    response.writeHead(301, { Location: '/public/inventory.html'})
-    userName = data;
+    userName = data.split("=")[1];
+    queries.createUser(userName)
+    response.writeHead(301, { Location: '/public/inventory.html' })
+
     response.end()
   })
 }
@@ -53,12 +55,27 @@ const handleGetInventory = (request, response) => {
   queries.getInventory((err, inventoryArray) => {
     if (err) console.log(err);
     inventoryArray = JSON.stringify(inventoryArray);
-    response.writeHead(200, {"Content-Type":"application/json"});
+    response.writeHead(200, { "Content-Type": "application/json" });
     response.end(inventoryArray);
   })
 }
-// const handleDbLogin = (request, response) => {
-//   dataStreamer(request,)
-// }
 
-module.exports = { handleHome, handlePublic, handleDbNewUser, handleGetInventory };
+const handleGetItemsOwned = (request, response) => {
+  console.log('came into handleGetItemsOwned');
+  queries.getItemsOwnedBy((err, inventoryArray) => {
+    if (err) console.log(err);
+    inventoryArray = JSON.stringify(inventoryArray);
+    response.writeHead(200, { "Content-Type": "application/json" });
+    response.end(inventoryArray);
+  })
+}
+
+const handleDbLogin = (request, response) => {
+  dataStreamer(request, (data) => {
+    response.writeHead(301, { Location: '/public/inventory.html' })
+    userName = data;
+    response.end()
+  })
+}
+
+module.exports = { handleHome, handlePublic, handleDbNewUser, handleGetInventory, handleDbLogin, handleGetItemsOwned };
