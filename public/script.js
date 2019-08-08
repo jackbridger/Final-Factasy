@@ -1,16 +1,35 @@
-const xhr = new XMLHttpRequest();
-const url = '/getinventory'
-xhr.onreadystatechange = () =>{
-  if(xhr.readyState===4 && xhr.status===200){
-    const inventoryArray=JSON.parse(xhr.responseText);
-    populateInventoryTable(inventoryArray);
+const getInventoryData = () => {
+  const xhr = new XMLHttpRequest();
+  const url = '/getinventory'
+  xhr.onreadystatechange = () =>{
+    if(xhr.readyState===4 && xhr.status===200){
+      const inventoryArray=JSON.parse(xhr.responseText);
+      console.log(inventoryArray);
+      populateInventoryTable(inventoryArray);
+    }
   }
+  xhr.open("GET", url);
+  xhr.send();
 }
-xhr.open("GET", url);
-xhr.send();
+
+getInventoryData();
 
 const populateInventoryTable = (arr) => {
-console.log('response array is : ', arr);
+  const inventoryTable = document.querySelector(".inventory_table");
+  arr.forEach(item => {
+    let newItem = document.createElement('tr');
+    let newItemName = document.createElement('th');
+    newItemName.innerText = item.item_name;
+    newItem.appendChild(newItemName);
+    let newItemPrice = document.createElement('th');
+    newItemPrice.innerText = item.item_price;
+    newItem.appendChild(newItemPrice);
+    let newItemQuantity = document.createElement('th');
+    newItemQuantity.innerText = item.item_quantity;
+    newItem.appendChild(newItemQuantity);
+    inventoryTable.appendChild(newItem);
+  })
+
 }
 
 
