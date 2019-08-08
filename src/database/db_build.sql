@@ -27,11 +27,14 @@ CREATE TABLE ownership (
 );
 
 INSERT INTO users (name)
-VALUES ('Jon'),('Aria');
+VALUES ('Jon'), ('Aria'), ('Hodor'), ('Kevin');
 
 INSERT INTO inventory
 (item_name, item_quantity, item_description, item_price, item_available, item_power)
-VALUES ('Dagger', 3, 'Stick them with the pointy end', 8, TRUE, 10), ('Cape', 5, 'It will keep you warm', 3, TRUE, 1);
+VALUES ('Dagger', 3, 'Stick them with the pointy end.', 8, TRUE, 10),
+('Cape', 5, 'It will keep you warm. And capes are so in right now.', 3, TRUE, 1),
+('Walking stick', 10, 'For old people to walk. Can also be used to beat people.', 2, TRUE, 2),
+('Toothbrush', 2, '79% of medieval dentists believe dental hygiene can keep you alive.', 10, TRUE, 20);
 
 
 INSERT INTO ownership (owner_id, item_id)
