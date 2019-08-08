@@ -71,20 +71,20 @@ test('Add row to ownership table with new ownership details', (t) => {
 })
 
 
+test('display score for specific user', (t) => {
+  runDbBuild((err,res) => {
+    t.error(err, 'No error');
 
-// test('display score for specific user', (t) => {
-//   runDbBuild((err,res) => {
-//     t.error(err, 'No error');
-//
-//     let expected = 40;
-//
-//     queries.getScore((err, result) => {
-//       if (err) console.log(err);
-//       t.deepEqual(result,expected, 'returns score for specific user');
-//       t.end();
-//     })
-//   })
-// })
+    let expected = [{sum: '40'}];
+
+    queries.getScoreByUser(4, (err, result) => {
+      if (err) console.log(err);
+      t.deepEqual(result,expected, 'returns score for specific user');
+      t.end();
+    })
+  })
+})
+
 
 test('get the list of items that a user owns', (t) => {
     runDbBuild((err, res) => {
@@ -97,4 +97,19 @@ test('get the list of items that a user owns', (t) => {
             t.end();
         })
     })
+})
+
+
+test('display score for specific user', (t) => {
+  runDbBuild((err,res) => {
+    t.error(err, 'No error');
+
+    let expected = [{name: 'Kevin', sun: '40'}, {name: 'Aria', sun: '10'}, {name: 'Hodor', sun: '2'}, {name: 'Jon', sun: '2'}];
+
+    queries.getAllScores((err, result) => {
+      if (err) console.log(err);
+      t.deepEqual(result,expected, 'returns score for all users');
+      t.end();
+    })
+  })
 })
