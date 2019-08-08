@@ -12,13 +12,13 @@ const getUsers = (cb) => {
 
 
 const getItemsOwnedBy = (userId, cb) => {
-  databaseConnection.query(`SELECT item_name, item_description, item_power FROM ownership INNER JOIN inventory ON ownership.item_id = inventory.id WHERE ownership.owner_id = ${userId};`, (err, res) => {
-    if (err) {
-      cb(err);
-    } else {
-      cb(null, res.rows)
-    }
-  });
+    databaseConnection.query(`SELECT item_name, item_description, item_power FROM ownership INNER JOIN inventory ON ownership.item_id = inventory.id WHERE ownership.owner_id = ${userId};`, (err, res) => {
+        if (err) {
+            cb(err);
+        } else {
+            cb(null, res.rows)
+        }
+    });
 
 };
 
@@ -28,7 +28,7 @@ const getInventory = (cb) => {
             cb(err);
         }
         else {
-          console.log(res.rows);
+            console.log(res.rows);
             cb(null, res.rows);
         }
     })
@@ -50,11 +50,11 @@ const buyItem = cb => {
       UPDATE inventory
       SET item_quantity = item_quantity - 1
       WHERE item_name = 'Cape';`, (err, res) => {
-        if (err) cb
-        else (
-            cb(null, res.rows)
-        )
-    })
+            if (err) cb(err)
+            else {
+                cb(null, res.rows)
+            }
+        })
 }
 
 
