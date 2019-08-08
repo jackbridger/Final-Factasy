@@ -46,7 +46,6 @@ test('Reduce quantity in inventory table after purchase', (t) => {
             //select inventory inside callback for buyItem(wait for completion of buyItem before trying to select the inventory)
             queries.getInventory((err, result) => {
                 if (err) console.log(err);
-                console.log(result);
                 t.deepEqual(result, expected, 'Cape should have a quantity of 4')
                 t.end();
             })
@@ -57,15 +56,14 @@ test('Reduce quantity in inventory table after purchase', (t) => {
 test('Add row to ownership table with new ownership details', (t) => {
     runDbBuild((err, res) => {
         t.error(err, 'No error');
-        let expected = [{ 1: 2 }, { 1: 2 }, { 2: 1 }, { 3: 3 }, { 4: 4 }, { 4: 4 }, { 1, 2}]
+        let expected = [{ id: 1, owner_id: 1, item_id: 2 }, { id: 2, owner_id: 1, item_id: 2 }, { id: 3, owner_id: 2, item_id: 1 }, { id: 4, owner_id: 3, item_id: 3 }, { id: 5, owner_id: 4, item_id: 4 }, { id: 6, owner_id: 4, item_id: 4 }, { id: 7, owner_id: 1, item_id: 2 }]
 
         queries.buyItem((err, result) => {
             if (err) console.log(err);
             //select inventory inside callback for buyItem(wait for completion of buyItem before trying to select the inventory)
             queries.getOwnership((err, result) => {
                 if (err) console.log(err);
-                console.log(result);
-                t.deepEqual(result, expected, 'Cape should have a quantity of 4')
+                t.deepEqual(result, expected, 'The ownership table should have a new row')
                 t.end();
             })
         })
