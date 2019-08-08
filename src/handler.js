@@ -50,11 +50,14 @@ const handleDbNewUser = (request, response) => {
 
 const handleGetInventory = (request, response) => {
   console.log('came into handlegetinventory');
-  queries.getInventory((err, inventoryArray) => {
+  queries.getInventory((err, res) => {
     if (err) console.log(err);
-    inventoryArray = JSON.stringify(inventoryArray);
+    else{
+    const inventoryArray=JSON.stringify(res);
+    console.log({inventoryArray});
     response.writeHead(200, {"Content-Type":"application/json"});
     response.end(inventoryArray);
+    }
   })
 }
 // const handleDbLogin = (request, response) => {
