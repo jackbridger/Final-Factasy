@@ -38,6 +38,6 @@ VALUES ('Dagger', 3, 'Stick them with the pointy end.', 8, TRUE, 10),
 
 
 INSERT INTO ownership (owner_id, item_id)
-VALUES (1, 2), (2, 1);
+VALUES (1, 2), (1, 2), (2, 1), (3, 3), (4, 4), (4, 4);
 
 COMMIT;
