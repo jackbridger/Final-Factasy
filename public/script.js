@@ -16,5 +16,5 @@ request ('/getinventory', (err,response) => {
   if(err) console.log(err);
   else
   const inventoryArr=response;
-  console.log(inventoryArr);
-}
+  console.log('response array is : ',inventoryArr);
+})
