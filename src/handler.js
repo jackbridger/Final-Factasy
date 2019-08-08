@@ -2,7 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const querystring = require("querystring");
 const dataStreamer = require("./helper").dataStreamer;
-
+const queries = require('./queries');
+let userName;
 
 const handleHome = (request, response) => {
   const filePath = path.join(__dirname, "..", "public", "index.html");
@@ -40,11 +41,23 @@ const handlePublic = (request, response) => {
 };
 
 const handleDbNewUser = (request, response) => {
-  dataStreamer(request, response, (data) => {
-    response.writeHead(301, { Location: 'http://localhost:3000/inventory/' + `${data}` })
+  dataStreamer(request, (data) => {
+    response.writeHead(301, { Location: 'http://localhost:3000/inventory/'})
+    userName = data;
     response.end()
   })
 }
 
+const handleGetInventory = (request, response) => {
+  queries.getInventory((err, inventoryArray) => {
+    if (err) console.log(err);
+    inventoryArray = JSON.stringify(inventoryArray);
+    response.writeHead(200, {"Content-Type":"application/json"});
+    response.end(inventoryArray);
+  })
+}
+// const handleDbLogin = (request, response) => {
+//   dataStreamer(request,)
+// }
 
-module.exports = { handleHome, handlePublic, handleDbNewUser };
+module.exports = { handleHome, handlePublic, handleDbNewUser, handleGetInventory };

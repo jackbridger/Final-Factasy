@@ -1,4 +1,4 @@
-const dataStreamer = (request, response, cb) => {
+const dataStreamer = (request, cb) => {
     let allTheData = ""
     request.on('data', (chunk) => {
         allTheData += chunk
