@@ -1,0 +1,21 @@
+body{
+  box-sizing: border-box;
+  margin:0;
+  padding:0;
+  background-color: #e04e38;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1{
+  font-family: 'Nova Cut', cursive;
+  font-size: 40px;
+  color: #f4be53;
+}
+
+#new-username,#login-username{
+  width: 60%;
+  font-size: 20px;
+}

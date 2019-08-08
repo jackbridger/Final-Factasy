@@ -7,8 +7,20 @@ const getUsers = (cb) => {
         else {
             cb(null, res.rows);
         }
-    })
-}
+    });
+};
+
+
+const getItemsOwnedBy = (userId, cb) => {
+  databaseConnection.query(`SELECT item_name, item_description, item_power FROM ownership INNER JOIN inventory ON ownership.item_id = inventory.id WHERE ownership.owner_id = ${userId};`, (err, res) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(null, res.rows)
+    }
+  });
+
+};
 
 const getInventory = (cb) => {
     databaseConnection.query('SELECT item_name,item_quantity FROM inventory ORDER BY id', (err, res) => {
@@ -46,4 +58,4 @@ const buyItem = cb => {
 }
 
 
-module.exports = { getUsers, getInventory, getOwnership, buyItem };
+module.exports = { getUsers, getItemsOwnedBy, getInventory, getOwnership, buyItem };
