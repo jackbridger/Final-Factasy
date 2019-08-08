@@ -76,7 +76,18 @@ const getScoreByUser = (userId, cb) => {
 }
 
 const getAllScores = cb => {
-
+    databaseConnection.query(`SELECT users.name, SUM(inventory.item_power) 
+    FROM users 
+    INNER JOIN ownership 
+    ON users.id = ownership.owner_id 
+    INNER JOIN inventory 
+    ON inventory.id = ownership.item_id 
+    GROUP BY users.id`, (err, res) => {
+        if (err) cb(err)
+        else {
+            cb(null, res.rows);
+        }
+    })
 }
 
 module.exports = { getUsers, getItemsOwnedBy, getInventory, getOwnership, buyItem, getScoreByUser, getAllScores };

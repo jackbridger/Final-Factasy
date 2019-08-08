@@ -104,7 +104,7 @@ test('display score for specific user', (t) => {
   runDbBuild((err,res) => {
     t.error(err, 'No error');
 
-    let expected = [{name: 'Kevin', sun: '40'}, {name: 'Aria', sun: '10'}, {name: 'Hodor', sun: '2'}, {name: 'Jon', sun: '2'}];
+    let expected = [{name: 'Kevin', sum: '40'}, {name: 'Aria', sum: '10'}, {name: 'Hodor', sum: '2'}, {name: 'Jon', sum: '2'}];
 
     queries.getAllScores((err, result) => {
       if (err) console.log(err);
