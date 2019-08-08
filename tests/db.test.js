@@ -15,3 +15,18 @@ test('select all data from users table', (t) => {
         })
     })
 })
+
+test('display score for specific user', (t) => {
+  runDbBuild((err,res) => {
+    t.error(err, 'No error');
+
+    let expected = 40;
+
+    queries.getScore((err, result) => {
+      if (err) console.log(err);
+      t.deepEqual(result,expected, 'returns score for specific user');
+      t.end();
+    })
+  })
+
+})
