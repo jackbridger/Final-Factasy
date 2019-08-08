@@ -45,12 +45,33 @@ const buyItem = (itemName) => {
   const url = `/buyitem?${itemName}`
   xhr.onreadystatechange = () =>{
     if(xhr.readyState===4 && xhr.status===200){
-      const updatedTables=JSON.parse(xhr.responseText);
-      console.log(updatedTables);
+      const updatedSatchel=JSON.parse(xhr.responseText);
+      //update inventory
+      getInventoryData();
+      populateSatchel();
     }
   }
   xhr.open("GET", url);
   xhr.send();
+}
+
+const populateSatchel = (arr) => {
+  const satchelTable = document.querySelector(".satchel_table");
+  arr.forEach(item => {
+    let newItem = document.createElement('tr');
+    // Item details filled in
+    let newItemName = document.createElement('th');
+    newItemName.innerText = item.item_name;
+    newItem.appendChild(newItemName);
+    let newItemDescription = document.createElement('th');
+    newItemDescription.innerText = item.item_description;
+    newItem.appendChild(newItemDescription);
+    let newItemPower = document.createElement('th');
+    newItemPower.innerText = item.item_power;
+    newItem.appendChild(newItemPower);
+    // Full new row added
+    satchelTable.appendChild(newItem);
+  })
 }
 
 // const request = (url,cb) => {
