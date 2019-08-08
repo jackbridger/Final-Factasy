@@ -7,7 +7,7 @@ let userName;
 
 const handleHome = (request, response) => {
   const filePath = path.join(__dirname, "..", "public", "index.html");
-  console.log(filePath);
+
   fs.readFile(filePath, (err, file) => {
     if (err) {
       response.writeHead(500, { "content-type": "text/html" });
@@ -27,7 +27,7 @@ const handlePublic = (request, response) => {
     js: "application/javascript",
     ico: "image/x-icon"
   }
-  console.log(request.url);
+
   const filePath = path.join(__dirname, "..", request.url)
   fs.readFile(filePath, (error, file) => {
     if (error) {
@@ -42,13 +42,14 @@ const handlePublic = (request, response) => {
 
 const handleDbNewUser = (request, response) => {
   dataStreamer(request, (data) => {
-    response.writeHead(301, { Location: 'http://localhost:3000/inventory/'})
+    response.writeHead(301, { Location: '/public/inventory.html'})
     userName = data;
     response.end()
   })
 }
 
 const handleGetInventory = (request, response) => {
+  console.log('came into handlegetinventory');
   queries.getInventory((err, inventoryArray) => {
     if (err) console.log(err);
     inventoryArray = JSON.stringify(inventoryArray);

@@ -4,7 +4,6 @@ const dataStreamer = (request, cb) => {
         allTheData += chunk
     })
     request.on('end', () => {
-        console.log(allTheData)
         cb(allTheData)
     })
 }
