@@ -4,5 +4,5 @@ node_js:
 services:
   - "postgresql"
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c 'create database final_factasy_db_test;' -U postgres
   - psql -c "create user final_factasy WITH PASSWORD 'waterbottle'" -U postgres
