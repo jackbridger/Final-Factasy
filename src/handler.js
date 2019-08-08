@@ -45,7 +45,6 @@ const handleDbNewUser = (request, response) => {
     userName = data.split("=")[1];
     queries.createUser(userName)
     response.writeHead(301, { Location: '/public/inventory.html' })
-
     response.end()
   })
 }
@@ -61,19 +60,21 @@ const handleGetInventory = (request, response) => {
 }
 
 const handleGetItemsOwned = (request, response) => {
+  // let userName = request
+  console.log('The username is', userName);
   console.log('came into handleGetItemsOwned');
-  queries.getItemsOwnedBy((err, inventoryArray) => {
+  queries.getItemsOwnedBy(userName, (err, itemsOwned) => {
     if (err) console.log(err);
-    inventoryArray = JSON.stringify(inventoryArray);
+    itemsOwned = JSON.stringify(itemsOwned);
     response.writeHead(200, { "Content-Type": "application/json" });
-    response.end(inventoryArray);
+    response.end(itemsOwned);
   })
 }
 
 const handleDbLogin = (request, response) => {
   dataStreamer(request, (data) => {
     response.writeHead(301, { Location: '/public/inventory.html' })
-    userName = data;
+    userName = data.split("=")[1];
     response.end()
   })
 }
