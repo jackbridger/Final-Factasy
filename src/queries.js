@@ -1,5 +1,5 @@
 const databaseConnection = require('./database/db_connection');
-const getData = (cb) => {
+const getUsers = (cb) => {
     databaseConnection.query('SELECT * FROM users ORDER BY id', (err, res) => {
         if (err) {
             cb(err);
@@ -10,8 +10,34 @@ const getData = (cb) => {
     })
 }
 
+const getInventory = (cb) => {
+    databaseConnection.query('SELECT item_name,item_quantity FROM inventory ORDER BY id', (err, res) => {
+        if (err) {
+            cb(err);
+        }
+        else {
+          console.log(res.rows);
+            cb(null, res.rows);
+        }
+    })
+}
+
+const getOwnership = (cb) => {
+    databaseConnection.query('SELECT * FROM ownership ORDER BY id', (err, res) => {
+        if (err) {
+            cb(err);
+        }
+        else {
+            cb(null, res.rows);
+        }
+    })
+}
+
 const buyItem = cb => {
-    databaseConnection.query(`UPDATE users SET gold_pieces = gold_pieces -1 WHERE name = 'Jon';`, (err, res) => {
+    databaseConnection.query(`UPDATE users SET gold_pieces = gold_pieces - 1 WHERE name = 'Jon';
+      UPDATE inventory
+      SET item_quantity = item_quantity - 1
+      WHERE item_name = 'Cape';`, (err, res) => {
         if (err) cb
         else (
             cb(null, res.rows)
@@ -20,5 +46,4 @@ const buyItem = cb => {
 }
 
 
-module.exports = { getData, buyItem };
-
+module.exports = { getUsers, getInventory, getOwnership, buyItem };
