@@ -58,6 +58,7 @@ const buyItem = cb => {
 }
 
 
+
 const getScoreByUser = (userId, cb) => {
     databaseConnection.query(`SELECT SUM(item_power) 
     FROM ownership 
@@ -71,4 +72,11 @@ const getScoreByUser = (userId, cb) => {
     });
 }
 
-module.exports = { getUsers, getItemsOwnedBy, getInventory, getOwnership, buyItem, getScoreByUser };
+const getAllScores = cb => {
+
+}
+
+module.exports = { getUsers, getItemsOwnedBy, getInventory, getOwnership, buyItem, getScoreByUser, getAllScores };
+
+
+
