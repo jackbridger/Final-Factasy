@@ -1,12 +1,11 @@
-const dataStreamer = (request, response) => {
+const dataStreamer = (request, response, cb) => {
     let allTheData = ""
     request.on('data', (chunk) => {
         allTheData += chunk
     })
     request.on('end', () => {
         console.log(allTheData)
-        return allTheData
-        response.end();
+        cb(allTheData)
     })
 }
 

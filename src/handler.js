@@ -39,10 +39,12 @@ const handlePublic = (request, response) => {
   });
 };
 
-const handleDb = (request, response) => {
-  const data = dataStreamer(request, response)
-  console.log(data)
+const handleDbNewUser = (request, response) => {
+  dataStreamer(request, response, (data) => {
+    response.writeHead(301, { Location: 'http://localhost:3000/inventory/' + `${data}` })
+    response.end()
+  })
 }
 
 
-module.exports = { handleHome, handlePublic, handleDb };
+module.exports = { handleHome, handlePublic, handleDbNewUser };
