@@ -15,3 +15,16 @@ test('select all data from users table', (t) => {
         })
     })
 })
+
+test('get the list of items that a user owns', (t) => {
+    runDbBuild((err, res) => {
+        t.error(err, 'No error');
+        let expected = [{item_name:'Toothbrush', item_description:'79% of medieval dentists believe dental hygiene can keep you alive.', item_power:10},{item_name:'Toothbrush', item_description:'79% of medieval dentists believe dental hygiene can keep you alive.', item_power:10}];
+
+        queries.getItemsOwnedBy(4, (err, result) => {
+            if (err) console.log(err);
+            t.deepEqual(result, expected, 'returns all items owned by user');
+            t.end();
+        })
+    })
+})
