@@ -79,4 +79,17 @@ const handleDbLogin = (request, response) => {
   })
 }
 
-module.exports = { handleHome, handlePublic, handleDbNewUser, handleGetInventory, handleDbLogin, handleGetItemsOwned };
+const handleBuyItem = (request, response) => {
+  const itemToBuy = request.url.split('?')[1];
+  console.log(itemToBuy);
+
+  queries.buyItem(userName, itemToBuy, (err, itemsOwned) => {
+    if (err) console.log(err);
+    response.writeHead(200, { "Content-Type": "application/json" })
+    response.end(handleGetInventory());
+  })
+  // Call buy item for user, using item to buy
+}
+
+
+module.exports = { handleHome, handlePublic, handleDbNewUser, handleGetInventory, handleDbLogin, handleGetItemsOwned, handleBuyItem };

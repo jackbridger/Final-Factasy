@@ -64,14 +64,13 @@ const getOwnership = (cb) => {
     })
 }
 
-const buyItem = cb => {
-    databaseConnection.query(`UPDATE users SET gold_pieces = gold_pieces - 1 WHERE name = 'Jon';
+const buyItem = (user_name, item_name, cb) => {
+    databaseConnection.query(`UPDATE users SET gold_pieces = gold_pieces - 1 WHERE name = {2};
       UPDATE inventory
       SET item_quantity = item_quantity - 1
-      WHERE item_name = 'Cape';
+      WHERE item_name = {1};
       INSERT INTO ownership(owner_id, item_id) 
-      VALUES ((SELECT id FROM users WHERE name = 'Jon'), (SELECT id FROM inventory WHERE item_name = 'Cape') )
-      `, (err, res) => {
+      VALUES ((SELECT id FROM users WHERE name = {2}), (SELECT id FROM inventory WHERE item_name = {1}));`,[user_name, item_name], (err, res) => {
             if (err) cb(err)
             else {
                 cb(null, res.rows)
