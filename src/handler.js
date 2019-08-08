@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const querystring = require("querystring");
+const dataStreamer = require("./helper").dataStreamer;
+
 
 const handleHome = (request, response) => {
   const filePath = path.join(__dirname, "..", "public", "index.html");
@@ -37,4 +39,10 @@ const handlePublic = (request, response) => {
   });
 };
 
-module.exports = { handleHome, handlePublic };
+const handleDb = (request, response) => {
+  const data = dataStreamer(request, response)
+  console.log(data)
+}
+
+
+module.exports = { handleHome, handlePublic, handleDb };

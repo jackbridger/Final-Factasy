@@ -9,6 +9,8 @@ const router = (request, response) => {
     handlers.handleHome(request, response);
   } else if (endpoint.includes('public')) {
     handlers.handlePublic(request, response);
+  } else if (endpoint.includes('/newuser')) {
+    handlers.handleDb(request, response)
   } else {
     response.writeHead(404);
     response.end("Page not found");
