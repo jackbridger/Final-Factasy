@@ -50,16 +50,27 @@ const buyItem = cb => {
       UPDATE inventory
       SET item_quantity = item_quantity - 1
       WHERE item_name = 'Cape';`, (err, res) => {
-        if (err) cb
-        else (
-            cb(null, res.rows)
-        )
+        if (err) cb(err)
+        else {
+            cb(null, res.rows);
+        }
     })
 }
 
 
 const getAllScores = cb => {
-
+    databaseConnection.query(`SELECT users.name, SUM(inventory.item_power) 
+    FROM users 
+    INNER JOIN ownership 
+    ON users.id = ownership.owner_id 
+    INNER JOIN inventory 
+    ON inventory.id = ownership.item_id 
+    GROUP BY users.id`, (err, res) => {
+        if (err) cb(err)
+        else {
+            cb(null, res.rows);
+        }
+    })
 }
 
 
