@@ -58,4 +58,9 @@ const buyItem = cb => {
 }
 
 
-module.exports = { getUsers, getItemsOwnedBy, getInventory, getOwnership, buyItem };
+const getAllScores = cb => {
+
+}
+
+
+module.exports = { getUsers, getItemsOwnedBy, getInventory, getOwnership, buyItem, getAllScores };
