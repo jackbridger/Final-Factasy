@@ -23,6 +23,5 @@ const getItemsOwnedBy = (userId, cb) => {
 
 };
 
-
-
 module.exports = { getData, getItemsOwnedBy };
+
