@@ -15,6 +15,11 @@ const request = (url,cb) => {
 request ('/getinventory', (err,response) => {
   if(err) console.log(err);
   else
-  const inventoryArr=response;
-  console.log(inventoryArr);
+  const inventoryArr=JSON.parse(response);
+  populateInventoryTable(inventoryArr);
+
+})
+
+const populateInventoryTable = (arr) => {
+console.log('response array is : ',arr);
 }
