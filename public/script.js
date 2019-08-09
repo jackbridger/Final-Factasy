@@ -1,10 +1,9 @@
 const getInventoryData = () => {
   const xhr = new XMLHttpRequest();
   const url = '/getinventory'
-  xhr.onreadystatechange = () =>{
-    if(xhr.readyState===4 && xhr.status===200){
-      const inventoryArray=JSON.parse(xhr.responseText);
-      console.log(inventoryArray);
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      const inventoryArray = JSON.parse(xhr.responseText);
       populateInventoryTable(inventoryArray);
     }
   }
@@ -16,10 +15,9 @@ const getInventoryData = () => {
 const getUserData = () => {
   const xhr = new XMLHttpRequest();
   const url = '/getuser'
-  xhr.onreadystatechange = () =>{
-    if(xhr.readyState===4 && xhr.status===200){
-      const userData=JSON.parse(xhr.responseText);
-      console.log(userData);
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      const userData = JSON.parse(xhr.responseText);
       populateUserData(userData);
     }
   }
@@ -34,6 +32,9 @@ getUserData();
 
 const populateInventoryTable = (arr) => {
   const inventoryTable = document.querySelector(".inventory_table");
+  while (inventoryTable.firstChild) {
+    inventoryTable.firstChild.remove()
+  }
   arr.forEach(item => {
     let newItem = document.createElement('tr');
     // Item details filled in
@@ -69,12 +70,12 @@ const populateUserData = (arr) => {
 const buyItem = (itemName) => {
   const xhr = new XMLHttpRequest();
   const url = `/buyitem?${itemName}`
-  xhr.onreadystatechange = () =>{
-    if(xhr.readyState===4 && xhr.status===200){
-      const updatedSatchel=JSON.parse(xhr.responseText);
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      const updatedSatchel = JSON.parse(xhr.responseText);
       //update inventory
       getInventoryData();
-      populateSatchel();
+      populateSatchel(updatedSatchel);
       getUserData();
     }
   }
@@ -84,6 +85,10 @@ const buyItem = (itemName) => {
 
 const populateSatchel = (arr) => {
   const satchelTable = document.querySelector(".satchel_table");
+  while (satchelTable.firstChild) {
+    satchelTable.firstChild.remove()
+  }
+
   arr.forEach(item => {
     let newItem = document.createElement('tr');
     // Item details filled in

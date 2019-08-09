@@ -34,7 +34,12 @@ INSERT INTO inventory
 VALUES ('Dagger', 3, 'Stick them with the pointy end.', 8, TRUE, 10),
 ('Cape', 5, 'It will keep you warm. And capes are so in right now.', 3, TRUE, 1),
 ('Walking stick', 10, 'For old people to walk. Can also be used to beat people.', 2, TRUE, 2),
-('Toothbrush', 2, '79% of medieval dentists believe dental hygiene can keep you alive.', 10, TRUE, 20);
+('Toothbrush', 2, '79% of medieval dentists believe dental hygiene can keep you alive.', 10, TRUE, 20),
+('Magic Sword', 5, 'Its magic and therefor cool', 18, TRUE, 100),
+('Wizards Hat', 8, 'For your head', 5, TRUE, 5),
+('Pet Squirrel', 8, 'Can be tought some tricks. Will keep you company on the road and bite your opponents', 18, TRUE, 50),
+('Apple', 8, 'Fruits are healthy, get some vitamins', 1, TRUE, 2);
+
 
 
 INSERT INTO ownership (owner_id, item_id)

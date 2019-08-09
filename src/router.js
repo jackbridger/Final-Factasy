@@ -17,6 +17,8 @@ const router = (request, response) => {
     handlers.handleGetInventory(request, response);
   } else if (endpoint.includes('/getitemsowned')) {
     handlers.handleGetItemsOwned(request, response);
+  } else if (endpoint.includes('/buyitem')) {
+    handlers.handleBuyItem(request, response);
   } else if (endpoint.includes('/getuser')) {
     handlers.handleGetUser(request, response);
   } else {

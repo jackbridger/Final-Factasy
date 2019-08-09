@@ -50,35 +50,36 @@ const handleDbNewUser = (request, response) => {
 }
 
 const handleGetInventory = (request, response) => {
-  console.log('came into handlegetinventory');
   queries.getInventory((err, res) => {
     if (err) console.log(err);
     else {
-    const inventoryArray=JSON.stringify(res);
-    console.log({inventoryArray});
-    response.writeHead(200, {"Content-Type":"application/json"});
-    response.end(inventoryArray);
+      const inventoryArray = JSON.stringify(res);
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(inventoryArray);
     }
   })
 }
 
-const handleGetItemsOwned = (request, response) => {
-  // let userName = request
-  console.log('The username is', userName);
-  console.log('came into handleGetItemsOwned');
-  queries.getItemsOwnedBy(userName, (err, itemsOwned) => {
-    if (err) console.log(err);
-    itemsOwned = JSON.stringify(itemsOwned);
-    response.writeHead(200, { "Content-Type": "application/json" });
-    response.end(itemsOwned);
-  })
-}
+
 
 const handleDbLogin = (request, response) => {
   dataStreamer(request, (data) => {
     response.writeHead(301, { Location: '/public/inventory.html' })
     userName = data.split("=")[1];
     response.end()
+  })
+}
+
+const handleBuyItem = (request, response) => {
+  const itemToBuy = request.url.split('?')[1];
+  queries.buyItem(userName, itemToBuy, (err, itemsOwned) => {
+    if (err) console.log(err);
+    queries.getItemsOwnedBy(userName, (err, itemsOwned) => {
+      if (err) console.log(err);
+      itemsOwned = JSON.stringify(itemsOwned);
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(itemsOwned);
+    })
   })
 }
 
@@ -92,4 +93,7 @@ const handleGetUser = (request, response) => {
   })
 }
 
-module.exports = { handleHome, handlePublic, handleDbNewUser, handleGetInventory, handleDbLogin, handleGetItemsOwned, handleGetUser };
+
+
+
+module.exports = { handleHome, handlePublic, handleDbNewUser, handleGetInventory, handleDbLogin, handleGetUser, handleBuyItem };
