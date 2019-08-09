@@ -12,7 +12,25 @@ const getInventoryData = () => {
   xhr.send();
 }
 
+
+const getUserData = () => {
+  const xhr = new XMLHttpRequest();
+  const url = '/getuser'
+  xhr.onreadystatechange = () =>{
+    if(xhr.readyState===4 && xhr.status===200){
+      const userData=JSON.parse(xhr.responseText);
+      console.log(userData);
+      populateUserData(userData);
+    }
+  }
+  xhr.open("GET", url);
+  xhr.send();
+}
+
+
 getInventoryData();
+getUserData();
+
 
 const populateInventoryTable = (arr) => {
   const inventoryTable = document.querySelector(".inventory_table");
@@ -40,6 +58,14 @@ const populateInventoryTable = (arr) => {
 }
 
 
+const populateUserData = (arr) => {
+  const userDetails = document.querySelector(".user_details");
+  const name = arr[0].name;
+  const gold = arr[0].gold_pieces;
+  userDetails.innerText = `User name: ${name} Coins left: ${gold}`
+}
+
+
 const buyItem = (itemName) => {
   const xhr = new XMLHttpRequest();
   const url = `/buyitem?${itemName}`
@@ -49,6 +75,7 @@ const buyItem = (itemName) => {
       //update inventory
       getInventoryData();
       populateSatchel();
+      getUserData();
     }
   }
   xhr.open("GET", url);
@@ -73,6 +100,7 @@ const populateSatchel = (arr) => {
     satchelTable.appendChild(newItem);
   })
 }
+
 
 // const request = (url,cb) => {
 //   const xhr = new XMLHttpRequest();
