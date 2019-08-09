@@ -7,7 +7,7 @@ body{
   background-color: #523A34;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   font-family: 'Metamorphous', cursive;
   color: #f4be53;
@@ -15,9 +15,11 @@ body{
 
 h1{
   font-family: 'Metamorphous', cursive;
-  font-size: 40px;
+  font-size: 2rem;
   color: #f4be53;
+  height: auto;
 }
+
 table{
   border-collapse: collapse;
 }
