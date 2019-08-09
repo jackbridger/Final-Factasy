@@ -65,18 +65,29 @@ const getOwnership = (cb) => {
 }
 
 const buyItem = (user_name, item_name, cb) => {
-    databaseConnection.query(`UPDATE users SET gold_pieces = gold_pieces - 1 WHERE name = {1};
-      UPDATE inventory
-      SET item_quantity = item_quantity - 1
-      WHERE item_name = {2};
-      INSERT INTO ownership(owner_id, item_id) 
-      VALUES ((SELECT id FROM users WHERE name = {1}), (SELECT id FROM inventory WHERE item_name = {2}));`,[user_name, item_name], (err, res) => {
+    item_name = decodeURI(item_name);
+    console.log('inside buy item username is ' + user_name);
+    console.log('inside buy item item name is ' + item_name);
+    const dbQuery = `UPDATE users SET gold_pieces = gold_pieces - 1 WHERE name = '${user_name}';
+    UPDATE inventory SET item_quantity = item_quantity - 1 WHERE item_name = '${item_name}';
+    INSERT INTO ownership(owner_id, item_id) 
+    VALUES ((SELECT id FROM users WHERE name = '${user_name}' LIMIT 1), (SELECT id FROM inventory WHERE item_name = '${item_name}' LIMIT 1));`
+    databaseConnection.query(dbQuery, (err, res) => {
             if (err) cb(err)
             else {
-                cb(null, res.rows)
+                console.log('buy item function update worked');
+                cb(null)
             }
         })
 }
+
+// UPDATE users SET gold_pieces = gold_pieces - 1 WHERE name = {1};
+//       UPDATE inventory
+//       SET item_quantity = item_quantity - 1
+//       WHERE item_name = {2};
+//       INSERT INTO ownership(owner_id, item_id) 
+//       VALUES ((SELECT id FROM users WHERE name = {1}), (SELECT id FROM inventory WHERE item_name = {2}));
+
 
 
 

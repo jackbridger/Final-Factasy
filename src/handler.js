@@ -50,12 +50,10 @@ const handleDbNewUser = (request, response) => {
 }
 
 const handleGetInventory = (request, response) => {
-  console.log('came into handlegetinventory');
   queries.getInventory((err, res) => {
     if (err) console.log(err);
     else{
     const inventoryArray=JSON.stringify(res);
-    console.log({inventoryArray});
     response.writeHead(200, {"Content-Type":"application/json"});
     response.end(inventoryArray);
     }
@@ -63,9 +61,6 @@ const handleGetInventory = (request, response) => {
 }
 
 const handleGetItemsOwned = (request, response) => {
-  // let userName = request
-  console.log('The username is', userName);
-  console.log('came into handleGetItemsOwned');
   queries.getItemsOwnedBy(userName, (err, itemsOwned) => {
     if (err) console.log(err);
     itemsOwned = JSON.stringify(itemsOwned);
@@ -84,10 +79,15 @@ const handleDbLogin = (request, response) => {
 
 const handleBuyItem = (request, response) => {
   const itemToBuy = request.url.split('?')[1];
-  console.log(itemToBuy);
+  console.log('item to buy is: ' + itemToBuy);
+  console.log('username is ' + userName);
 
   queries.buyItem(userName, itemToBuy, (err, itemsOwned) => {
+    console.log('came into buy item query');
+    console.log('inside buyitem: item to buy is: ' + itemToBuy);
+    console.log('inside buyitem: username is ' + userName);
     if (err) console.log(err);
+    console.log('about to write the head');
     response.writeHead(200, { "Content-Type": "application/json" })
     response.end();
   })
