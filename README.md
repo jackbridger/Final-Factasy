@@ -1,9 +1,9 @@
 # Week6-DFIO
 
-git clone git@github.com:fac-17/Week6-DFIO.git
-cd into folder
-npm install
-npm start
+- git clone git@github.com:fac-17/Week6-DFIO.git
+- cd into folder
+- npm install
+- npm start
 
 
 ### Agreements
