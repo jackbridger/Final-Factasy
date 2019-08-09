@@ -53,7 +53,7 @@ const handleGetInventory = (request, response) => {
   console.log('came into handlegetinventory');
   queries.getInventory((err, res) => {
     if (err) console.log(err);
-    else{
+    else {
     const inventoryArray=JSON.stringify(res);
     console.log({inventoryArray});
     response.writeHead(200, {"Content-Type":"application/json"});
@@ -82,4 +82,14 @@ const handleDbLogin = (request, response) => {
   })
 }
 
-module.exports = { handleHome, handlePublic, handleDbNewUser, handleGetInventory, handleDbLogin, handleGetItemsOwned };
+const handleGetUser = (request, response) => {
+  queries.getUserData(userName, (err, res) => {
+    if (err) console.log(err);
+    userData = JSON.stringify(res);
+    response.writeHead(200, { "Content-Type": "application/json" });
+    response.end(userData);
+
+  })
+}
+
+module.exports = { handleHome, handlePublic, handleDbNewUser, handleGetInventory, handleDbLogin, handleGetItemsOwned, handleGetUser };
