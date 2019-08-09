@@ -73,9 +73,9 @@ const getOwnership = (cb) => {
 
 const buyItem = (user_name, item_name, cb) => {
     item_name = decodeURI(item_name);
-    const dbQuery = `UPDATE users SET gold_pieces = gold_pieces - 1 WHERE name = '${user_name}';
+    const dbQuery = `UPDATE users SET gold_pieces = gold_pieces - (SELECT item_price from inventory WHERE item_name = '${item_name}'), name = '${user_name}';
     UPDATE inventory SET item_quantity = item_quantity - 1 WHERE item_name = '${item_name}';
-    INSERT INTO ownership(owner_id, item_id) 
+    INSERT INTO ownership(owner_id, item_id)
     VALUES ((SELECT id FROM users WHERE name = '${user_name}' LIMIT 1), (SELECT id FROM inventory WHERE item_name = '${item_name}' LIMIT 1));`
     databaseConnection.query(dbQuery, (err, res) => {
         if (err) cb(err)
@@ -89,7 +89,7 @@ const buyItem = (user_name, item_name, cb) => {
 //       UPDATE inventory
 //       SET item_quantity = item_quantity - 1
 //       WHERE item_name = {2};
-//       INSERT INTO ownership(owner_id, item_id) 
+//       INSERT INTO ownership(owner_id, item_id)
 //       VALUES ((SELECT id FROM users WHERE name = {1}), (SELECT id FROM inventory WHERE item_name = {2}));
 
 
