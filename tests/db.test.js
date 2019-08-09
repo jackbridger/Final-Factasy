@@ -39,7 +39,7 @@ test('Reduce gold in user table after purchase', (t) => {
 test('Reduce quantity in inventory table after purchase', (t) => {
     runDbBuild((err, res) => {
         t.error(err, 'No error');
-        let expected = [{ item_name: 'Dagger', item_quantity: 3 }, { item_name: 'Cape', item_quantity: 4 }, { item_name: 'Walking stick', item_quantity: 10 }, { item_name: 'Toothbrush', item_quantity: 2 }]
+        let expected =  [ { item_name: 'Dagger', item_quantity: 3, item_price: 8 }, { item_name: 'Cape', item_quantity: 4, item_price: 3 }, { item_name: 'Walking stick', item_quantity: 10, item_price: 2 }, { item_name: 'Toothbrush', item_quantity: 2, item_price: 10 } ]
 
         queries.buyItem((err, result) => {
             if (err) console.log(err);

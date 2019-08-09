@@ -42,7 +42,7 @@ const getItemsOwnedBy = (username, cb) => {
 };
 
 const getInventory = (cb) => {
-    databaseConnection.query('SELECT item_name,item_quantity FROM inventory ORDER BY id', (err, res) => {
+    databaseConnection.query('SELECT item_name,item_quantity,item_price FROM inventory ORDER BY id', (err, res) => {
         if (err) {
             cb(err);
         }
@@ -65,12 +65,12 @@ const getOwnership = (cb) => {
 }
 
 const buyItem = (user_name, item_name, cb) => {
-    databaseConnection.query(`UPDATE users SET gold_pieces = gold_pieces - 1 WHERE name = {2};
+    databaseConnection.query(`UPDATE users SET gold_pieces = gold_pieces - 1 WHERE name = {1};
       UPDATE inventory
       SET item_quantity = item_quantity - 1
-      WHERE item_name = {1};
+      WHERE item_name = {2};
       INSERT INTO ownership(owner_id, item_id) 
-      VALUES ((SELECT id FROM users WHERE name = {2}), (SELECT id FROM inventory WHERE item_name = {1}));`,[user_name, item_name], (err, res) => {
+      VALUES ((SELECT id FROM users WHERE name = {1}), (SELECT id FROM inventory WHERE item_name = {2}));`,[user_name, item_name], (err, res) => {
             if (err) cb(err)
             else {
                 cb(null, res.rows)
@@ -81,10 +81,10 @@ const buyItem = (user_name, item_name, cb) => {
 
 
 const getScoreByUser = (userId, cb) => {
-    databaseConnection.query(`SELECT SUM(item_power) 
-    FROM ownership 
-    INNER JOIN inventory 
-    ON ownership.item_id = inventory.id 
+    databaseConnection.query(`SELECT SUM(item_power)
+    FROM ownership
+    INNER JOIN inventory
+    ON ownership.item_id = inventory.id
     WHERE ownership.owner_id = ${userId}`, (err, res) => {
             if (err) cb(err)
             else {
@@ -94,12 +94,12 @@ const getScoreByUser = (userId, cb) => {
 }
 
 const getAllScores = cb => {
-    databaseConnection.query(`SELECT users.name, SUM(inventory.item_power) 
-    FROM users 
-    INNER JOIN ownership 
-    ON users.id = ownership.owner_id 
-    INNER JOIN inventory 
-    ON inventory.id = ownership.item_id 
+    databaseConnection.query(`SELECT users.name, SUM(inventory.item_power)
+    FROM users
+    INNER JOIN ownership
+    ON users.id = ownership.owner_id
+    INNER JOIN inventory
+    ON inventory.id = ownership.item_id
     GROUP BY users.id`, (err, res) => {
             if (err) cb(err)
             else {
@@ -109,6 +109,3 @@ const getAllScores = cb => {
 }
 
 module.exports = { getUsers, getItemsOwnedBy, getInventory, getOwnership, buyItem, getScoreByUser, getAllScores, createUser };
-
-
-

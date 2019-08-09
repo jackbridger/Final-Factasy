@@ -51,11 +51,14 @@ const handleDbNewUser = (request, response) => {
 
 const handleGetInventory = (request, response) => {
   console.log('came into handlegetinventory');
-  queries.getInventory((err, inventoryArray) => {
+  queries.getInventory((err, res) => {
     if (err) console.log(err);
-    inventoryArray = JSON.stringify(inventoryArray);
-    response.writeHead(200, { "Content-Type": "application/json" });
+    else{
+    const inventoryArray=JSON.stringify(res);
+    console.log({inventoryArray});
+    response.writeHead(200, {"Content-Type":"application/json"});
     response.end(inventoryArray);
+    }
   })
 }
 
@@ -86,7 +89,7 @@ const handleBuyItem = (request, response) => {
   queries.buyItem(userName, itemToBuy, (err, itemsOwned) => {
     if (err) console.log(err);
     response.writeHead(200, { "Content-Type": "application/json" })
-    response.end(handleGetInventory());
+    response.end();
   })
   // Call buy item for user, using item to buy
 }
