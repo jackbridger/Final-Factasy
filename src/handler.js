@@ -52,21 +52,21 @@ const handleDbNewUser = (request, response) => {
 const handleGetInventory = (request, response) => {
   queries.getInventory((err, res) => {
     if (err) console.log(err);
-    else{
-    const inventoryArray=JSON.stringify(res);
-    response.writeHead(200, {"Content-Type":"application/json"});
-    response.end(inventoryArray);
+    else {
+      const inventoryArray = JSON.stringify(res);
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(inventoryArray);
     }
   })
 }
 
 const handleGetItemsOwned = (request, response) => {
-  queries.getItemsOwnedBy(userName, (err, itemsOwned) => {
-    if (err) console.log(err);
-    itemsOwned = JSON.stringify(itemsOwned);
-    response.writeHead(200, { "Content-Type": "application/json" });
-    response.end(itemsOwned);
-  })
+  // queries.getItemsOwnedBy(userName, (err, itemsOwned) => {
+  //   if (err) console.log(err);
+  //   itemsOwned = JSON.stringify(itemsOwned);
+  //   response.writeHead(200, { "Content-Type": "application/json" });
+  //   response.end(itemsOwned);
+  // })
 }
 
 const handleDbLogin = (request, response) => {
@@ -87,9 +87,13 @@ const handleBuyItem = (request, response) => {
     console.log('inside buyitem: item to buy is: ' + itemToBuy);
     console.log('inside buyitem: username is ' + userName);
     if (err) console.log(err);
-    console.log('about to write the head');
-    response.writeHead(200, { "Content-Type": "application/json" })
-    response.end();
+    queries.getItemsOwnedBy(userName, (err, itemsOwned) => {
+      if (err) console.log(err);
+      itemsOwned = JSON.stringify(itemsOwned);
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(itemsOwned);
+    })
+
   })
   // Call buy item for user, using item to buy
 }

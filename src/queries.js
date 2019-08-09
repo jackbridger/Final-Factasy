@@ -27,7 +27,7 @@ const getUsers = (cb) => {
 
 const getItemsOwnedBy = (username, cb) => {
     databaseConnection.query(`
-    SELECT item_name, item_description FROM users INNER JOIN ownership ON users.id = ownership.owner_id INNER JOIN
+    SELECT item_name, item_description, item_power FROM users INNER JOIN ownership ON users.id = ownership.owner_id INNER JOIN
  inventory ON ownership.item_id = inventory.id
  WHERE name= $1`, [username], (err, res) => {
             if (err) {
@@ -73,12 +73,12 @@ const buyItem = (user_name, item_name, cb) => {
     INSERT INTO ownership(owner_id, item_id) 
     VALUES ((SELECT id FROM users WHERE name = '${user_name}' LIMIT 1), (SELECT id FROM inventory WHERE item_name = '${item_name}' LIMIT 1));`
     databaseConnection.query(dbQuery, (err, res) => {
-            if (err) cb(err)
-            else {
-                console.log('buy item function update worked');
-                cb(null)
-            }
-        })
+        if (err) cb(err)
+        else {
+            console.log('buy item function update worked');
+            cb(null)
+        }
+    })
 }
 
 // UPDATE users SET gold_pieces = gold_pieces - 1 WHERE name = {1};
