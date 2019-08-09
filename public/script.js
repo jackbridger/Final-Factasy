@@ -1,9 +1,9 @@
 const getInventoryData = () => {
   const xhr = new XMLHttpRequest();
   const url = '/getinventory'
-  xhr.onreadystatechange = () =>{
-    if(xhr.readyState===4 && xhr.status===200){
-      const inventoryArray=JSON.parse(xhr.responseText);
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      const inventoryArray = JSON.parse(xhr.responseText);
       console.log(inventoryArray);
       populateInventoryTable(inventoryArray);
     }
@@ -12,10 +12,31 @@ const getInventoryData = () => {
   xhr.send();
 }
 
+
+const getUserData = () => {
+  const xhr = new XMLHttpRequest();
+  const url = '/getuser'
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      const userData = JSON.parse(xhr.responseText);
+      console.log(userData);
+      populateUserData(userData);
+    }
+  }
+  xhr.open("GET", url);
+  xhr.send();
+}
+
+
 getInventoryData();
+getUserData();
+
 
 const populateInventoryTable = (arr) => {
   const inventoryTable = document.querySelector(".inventory_table");
+  while (inventoryTable.firstChild) {
+    inventoryTable.firstChild.remove()
+  }
   arr.forEach(item => {
     let newItem = document.createElement('tr');
     // Item details filled in
@@ -40,15 +61,24 @@ const populateInventoryTable = (arr) => {
 }
 
 
+const populateUserData = (arr) => {
+  const userDetails = document.querySelector(".user_details");
+  const name = arr[0].name;
+  const gold = arr[0].gold_pieces;
+  userDetails.innerText = `User name: ${name} Coins left: ${gold}`
+}
+
+
 const buyItem = (itemName) => {
   const xhr = new XMLHttpRequest();
   const url = `/buyitem?${itemName}`
-  xhr.onreadystatechange = () =>{
-    if(xhr.readyState===4 && xhr.status===200){
-      const updatedSatchel=JSON.parse(xhr.responseText);
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      const updatedSatchel = JSON.parse(xhr.responseText);
       //update inventory
       getInventoryData();
-      populateSatchel();
+      populateSatchel(updatedSatchel);
+      getUserData();
     }
   }
   xhr.open("GET", url);
@@ -57,6 +87,10 @@ const buyItem = (itemName) => {
 
 const populateSatchel = (arr) => {
   const satchelTable = document.querySelector(".satchel_table");
+  while (satchelTable.firstChild) {
+    satchelTable.firstChild.remove()
+  }
+
   arr.forEach(item => {
     let newItem = document.createElement('tr');
     // Item details filled in
@@ -73,6 +107,7 @@ const populateSatchel = (arr) => {
     satchelTable.appendChild(newItem);
   })
 }
+
 
 // const request = (url,cb) => {
 //   const xhr = new XMLHttpRequest();

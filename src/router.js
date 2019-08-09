@@ -11,19 +11,17 @@ const router = (request, response) => {
     handlers.handlePublic(request, response);
   } else if (endpoint.includes('/newuser')) {
     handlers.handleDbNewUser(request, response);
-  }
-  else if (endpoint.includes('/login')) {
+  } else if (endpoint.includes('/login')) {
     handlers.handleDbLogin(request, response);
   } else if (endpoint.includes('/getinventory')) {
     handlers.handleGetInventory(request, response);
-  }
-  else if (endpoint.includes('/getitemsowned')) {
+  } else if (endpoint.includes('/getitemsowned')) {
     handlers.handleGetItemsOwned(request, response);
-  }
-  else if (endpoint.includes('/buyitem')) {
+  } else if (endpoint.includes('/buyitem')) {
     handlers.handleBuyItem(request, response);
-  }
-  else {
+  } else if (endpoint.includes('/getuser')) {
+    handlers.handleGetUser(request, response);
+  } else {
     response.writeHead(404);
     response.end("Page not found");
   }

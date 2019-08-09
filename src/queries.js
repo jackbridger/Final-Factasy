@@ -11,10 +11,19 @@ const createUser = (name) => {
 
 
 
-
-
 const getUsers = (cb) => {
     databaseConnection.query('SELECT * FROM users ORDER BY id', (err, res) => {
+        if (err) {
+            cb(err);
+        }
+        else {
+            cb(null, res.rows);
+        }
+    });
+};
+
+const getUserData = (name, cb) => {
+    databaseConnection.query(`SELECT name, gold_pieces FROM users WHERE name= $1`, [name], (err, res) => {
         if (err) {
             cb(err);
         }
@@ -119,4 +128,4 @@ const getAllScores = cb => {
         })
 }
 
-module.exports = { getUsers, getItemsOwnedBy, getInventory, getOwnership, buyItem, getScoreByUser, getAllScores, createUser };
+module.exports = { getUsers, getItemsOwnedBy, getInventory, getOwnership, buyItem, getScoreByUser, getAllScores, createUser, getUserData };

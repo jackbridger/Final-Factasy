@@ -60,14 +60,7 @@ const handleGetInventory = (request, response) => {
   })
 }
 
-const handleGetItemsOwned = (request, response) => {
-  // queries.getItemsOwnedBy(userName, (err, itemsOwned) => {
-  //   if (err) console.log(err);
-  //   itemsOwned = JSON.stringify(itemsOwned);
-  //   response.writeHead(200, { "Content-Type": "application/json" });
-  //   response.end(itemsOwned);
-  // })
-}
+
 
 const handleDbLogin = (request, response) => {
   dataStreamer(request, (data) => {
@@ -83,6 +76,7 @@ const handleBuyItem = (request, response) => {
   console.log('username is ' + userName);
 
   queries.buyItem(userName, itemToBuy, (err, itemsOwned) => {
+
     console.log('came into buy item query');
     console.log('inside buyitem: item to buy is: ' + itemToBuy);
     console.log('inside buyitem: username is ' + userName);
@@ -93,10 +87,20 @@ const handleBuyItem = (request, response) => {
       response.writeHead(200, { "Content-Type": "application/json" });
       response.end(itemsOwned);
     })
+  })
+}
+
+const handleGetUser = (request, response) => {
+  queries.getUserData(userName, (err, res) => {
+    if (err) console.log(err);
+    userData = JSON.stringify(res);
+    response.writeHead(200, { "Content-Type": "application/json" });
+    response.end(userData);
 
   })
-  // Call buy item for user, using item to buy
 }
 
 
-module.exports = { handleHome, handlePublic, handleDbNewUser, handleGetInventory, handleDbLogin, handleGetItemsOwned, handleBuyItem };
+
+
+module.exports = { handleHome, handlePublic, handleDbNewUser, handleGetInventory, handleDbLogin, handleGetUser, handleBuyItem };
