@@ -4,7 +4,6 @@ const getInventoryData = () => {
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4 && xhr.status === 200) {
       const inventoryArray = JSON.parse(xhr.responseText);
-      console.log(inventoryArray);
       populateInventoryTable(inventoryArray);
     }
   }
@@ -19,7 +18,6 @@ const getUserData = () => {
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4 && xhr.status === 200) {
       const userData = JSON.parse(xhr.responseText);
-      console.log(userData);
       populateUserData(userData);
     }
   }

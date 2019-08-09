@@ -42,7 +42,6 @@ const getItemsOwnedBy = (username, cb) => {
             if (err) {
                 cb(err);
             } else {
-                console.log('these are the rows', res.rows);
                 cb(null, res.rows)
 
             }
@@ -56,7 +55,6 @@ const getInventory = (cb) => {
             cb(err);
         }
         else {
-            console.log(res.rows);
             cb(null, res.rows);
         }
     })
@@ -75,8 +73,6 @@ const getOwnership = (cb) => {
 
 const buyItem = (user_name, item_name, cb) => {
     item_name = decodeURI(item_name);
-    console.log('inside buy item username is ' + user_name);
-    console.log('inside buy item item name is ' + item_name);
     const dbQuery = `UPDATE users SET gold_pieces = gold_pieces - 1 WHERE name = '${user_name}';
     UPDATE inventory SET item_quantity = item_quantity - 1 WHERE item_name = '${item_name}';
     INSERT INTO ownership(owner_id, item_id) 
@@ -84,7 +80,6 @@ const buyItem = (user_name, item_name, cb) => {
     databaseConnection.query(dbQuery, (err, res) => {
         if (err) cb(err)
         else {
-            console.log('buy item function update worked');
             cb(null)
         }
     })

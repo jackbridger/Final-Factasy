@@ -72,14 +72,7 @@ const handleDbLogin = (request, response) => {
 
 const handleBuyItem = (request, response) => {
   const itemToBuy = request.url.split('?')[1];
-  console.log('item to buy is: ' + itemToBuy);
-  console.log('username is ' + userName);
-
   queries.buyItem(userName, itemToBuy, (err, itemsOwned) => {
-
-    console.log('came into buy item query');
-    console.log('inside buyitem: item to buy is: ' + itemToBuy);
-    console.log('inside buyitem: username is ' + userName);
     if (err) console.log(err);
     queries.getItemsOwnedBy(userName, (err, itemsOwned) => {
       if (err) console.log(err);
