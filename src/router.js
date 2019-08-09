@@ -12,10 +12,13 @@ const router = (request, response) => {
   } else if (endpoint.includes('/newuser')) {
     handlers.handleDbNewUser(request, response);
   }
-    else if (endpoint.includes('/login')) {
-      handlers.handleDbLogin(request, response);
+  else if (endpoint.includes('/login')) {
+    handlers.handleDbLogin(request, response);
   } else if (endpoint.includes('/getinventory')) {
     handlers.handleGetInventory(request, response);
+  }
+  else if (endpoint.includes('/getitemsowned')) {
+    handlers.handleGetItemsOwned(request, response);
   }
   else {
     response.writeHead(404);
