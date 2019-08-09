@@ -42,7 +42,7 @@ const getItemsOwnedBy = (username, cb) => {
 };
 
 const getInventory = (cb) => {
-    databaseConnection.query('SELECT item_name,item_quantity FROM inventory ORDER BY id', (err, res) => {
+    databaseConnection.query('SELECT item_name,item_quantity,item_price FROM inventory ORDER BY id', (err, res) => {
         if (err) {
             cb(err);
         }
@@ -69,7 +69,7 @@ const buyItem = cb => {
       UPDATE inventory
       SET item_quantity = item_quantity - 1
       WHERE item_name = 'Cape';
-      INSERT INTO ownership(owner_id, item_id) 
+      INSERT INTO ownership(owner_id, item_id)
       VALUES ((SELECT id FROM users WHERE name = 'Jon'), (SELECT id FROM inventory WHERE item_name = 'Cape') )
       `, (err, res) => {
             if (err) cb(err)
@@ -82,10 +82,10 @@ const buyItem = cb => {
 
 
 const getScoreByUser = (userId, cb) => {
-    databaseConnection.query(`SELECT SUM(item_power) 
-    FROM ownership 
-    INNER JOIN inventory 
-    ON ownership.item_id = inventory.id 
+    databaseConnection.query(`SELECT SUM(item_power)
+    FROM ownership
+    INNER JOIN inventory
+    ON ownership.item_id = inventory.id
     WHERE ownership.owner_id = ${userId}`, (err, res) => {
             if (err) cb(err)
             else {
@@ -95,12 +95,12 @@ const getScoreByUser = (userId, cb) => {
 }
 
 const getAllScores = cb => {
-    databaseConnection.query(`SELECT users.name, SUM(inventory.item_power) 
-    FROM users 
-    INNER JOIN ownership 
-    ON users.id = ownership.owner_id 
-    INNER JOIN inventory 
-    ON inventory.id = ownership.item_id 
+    databaseConnection.query(`SELECT users.name, SUM(inventory.item_power)
+    FROM users
+    INNER JOIN ownership
+    ON users.id = ownership.owner_id
+    INNER JOIN inventory
+    ON inventory.id = ownership.item_id
     GROUP BY users.id`, (err, res) => {
             if (err) cb(err)
             else {
@@ -110,6 +110,3 @@ const getAllScores = cb => {
 }
 
 module.exports = { getUsers, getItemsOwnedBy, getInventory, getOwnership, buyItem, getScoreByUser, getAllScores, createUser };
-
-
-
